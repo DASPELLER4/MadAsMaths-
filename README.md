@@ -1,2 +1,2 @@
-# MadAsMaths-
-search for madasmaths.com
+# MadAsMaths+
+Simple add-on search engine for madasmaths.com
