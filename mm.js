@@ -59,7 +59,7 @@ if(location.pathname === "/search"){
 			<ul>\
 				<li>\
 				<p style="margin: 0 15px" align="justify"><span lang="en-gb">\
-				<font face="Tahoma" size="2">This is a very basic search engine, if there are no results, try to broaded your search. Like instead of writing "A Level past paper", write "practice papers" and find your desired file.</font></span></p>\
+				<font face="Tahoma" size="2">This is a very basic search engine, if there are no results, try to broaden your search. Like instead of writing "A Level past paper", write "practice papers" and find your desired file.</font></span></p>\
 				</li>\
 			</ul>\
 			<hr color="#000080" size="1">\
