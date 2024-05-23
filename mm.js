@@ -34,11 +34,27 @@ submit.value = "Search"
 form.appendChild(input1)
 form.appendChild(submit)
 
+function getDownloadIcon(x){
+	let img = document.createElement('img');
+	img.border = "0";
+	img.height = "20";
+	img.width = "80";
+	img.src = "https://madasmaths.com/DownloadIcons_" + x + ".jpg"
+	return img;
+}
+
 if(location.pathname === "/search"){
-  let body = document.querySelector('body');
-  // sets up the page to resemble other MadAsMaths pages with info on the search engine
-  // required since /search is by default a 404 page
-  body.innerHTML = '<p style="margin: 0 15px" align="justify">&nbsp;</p>\
+	let body = document.querySelector('body');
+	// sets up the page to resemble other MadAsMaths pages with info on the search engine
+	// required since /search is by default a 404 page
+ 	body.innerHTML = '<style>\
+				a{text-decoration: none; color: #000080;}\
+				a.index{color: #363636; text-decoration: none;}\
+				a.index:hover{color: #363636; text-decoration: underline;}\
+				td{text-align: center;}\
+				tr{background: url(\"https://madasmaths.com/BackGround_Shell.jpg\");}\
+			</style>\
+			<p style="margin: 0 15px" align="justify">&nbsp;</p>\
 			<p style="margin: 0 15px" align="center">\
 			<img border="0" src="https://madasmaths.com/Logo.jpg" width="602" height="60"></p>\
 			<p style="margin: 0 15px" align="center">\
@@ -67,35 +83,41 @@ if(location.pathname === "/search"){
 			<p style="margin: 0 15px" align="center"><span lang="en-gb">\
 			<font face="Tahoma" size="2">Please click on the titles below to download the files</font></span></p>\
 			<p style="margin: 0 15px" align="center">&nbsp;</p>';
-  document.querySelector('title').innerText = "Search MadAsMaths";
-  body.appendChild(form);
-  let table = document.createElement("table");
-  table.style = "border-collapse: collapse;";
-  table.cellSpacing = "0";
-  table.cellPadding = "0";
-  table.align = "center";
-  body.appendChild(table);
-  let fields = parseQueryStringToDictionary(location.search)
-  let query = fields.query.toLowerCase().replaceAll(" ","_");
-  input1.value = query;
-  console.log(query);
-  for(let [key, value] of Object.entries(database)){
-    if(value.includes(query)){
-      let row = table.insertRow(-1);
-      let c1 = row.insertCell(-1);
-      let c2 = row.insertCell(-1);
-      c2.innerHTML = '<img border="0" src="https://madasmaths.com/DownloadIcons_' + value.split(".").slice(-1)[0].toUpperCase() + '.jpg" width="80" height="20">';
-      let element = document.createElement('a');
-      element.innerText = key;
-      element.href = value;
-      element.target = "_blank";
-      element.style = "text-decoration: none; color: #000080;"
-      c1.style.textAlign = 'center';
-      row.style.background = "url(\"https://madasmaths.com/BackGround_Shell.jpg\")"
-      c1.appendChild(element);
-    }
-  }
+	document.querySelector('title').innerText = "Search MadAsMaths";
+	body.appendChild(form);
+	let table = document.createElement("table");
+	table.style = "border-collapse: collapse;";
+	table.cellSpacing = "0";
+	table.cellPadding = "0";
+	table.align = "center";
+	body.appendChild(table);
+	let fields = parseQueryStringToDictionary(location.search)
+	let query = fields.query.toLowerCase().replaceAll(" ","_");
+	input1.value = query;
+	for(let [key, value] of Object.entries(database)){
+		if(value.replaceAll('/','_').includes(query)){
+			let row = table.insertRow(-1);
+			
+			let c1 = row.insertCell(-1);
+			let element = document.createElement('a');
+			element.href = value;
+			element.target = "_blank";
+			element.innerText = key;
+			c1.appendChild(element);
+			
+			let c2 = row.insertCell(-1);
+			c2.appendChild(getDownloadIcon(value.split(".").slice(-1)[0].toUpperCase()));
+			
+			let c3 = row.insertCell(-1);
+			let split = value.split('/');
+			let bookletDir = document.createElement('a');
+			bookletDir.innerText = split.slice(split.indexOf('archive')+1,split.indexOf('key')).join(" :: ").replaceAll("_"," ");
+			bookletDir.className = "index";
+			bookletDir.href = "https://madasmaths.com/" + split.slice(split.indexOf('archive'),split.indexOf('key')).join("_")+".html";
+			c3.appendChild(bookletDir);
+		}
+	}
 } else {
-  // inserts the form into the webpage
-  document.querySelectorAll('body>div>table>tbody>tr')[2].querySelectorAll('td')[2].insertBefore(form, document.querySelectorAll('body>div>table>tbody>tr')[2].querySelectorAll('td')[2].firstChild)
+	// inserts the form into the webpage
+	document.querySelectorAll('body>div>table>tbody>tr')[2].querySelectorAll('td')[2].insertBefore(form, document.querySelectorAll('body>div>table>tbody>tr')[2].querySelectorAll('td')[2].firstChild)
 }
