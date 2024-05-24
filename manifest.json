@@ -1,14 +1,17 @@
 {
-  "manifest_version": 2,
+  "manifest_version": 3,
   "name": "Search For MadAsMaths",
-  "version": "1.1",
+  "version": "1.1.1",
 
   "description": "Adds a search bar to madasmaths.com",
 
   "icons": {
     "48": "icons/mm+-48.png"
   },
-
+  "content_security_policy": {},
+  "action":{
+    "default_popup": "popup.html"
+  },
   "content_scripts": [
     {
       "matches": ["*://madasmaths.com/*"],
@@ -16,4 +19,3 @@
     }
   ]
 }
-
